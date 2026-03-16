@@ -2,9 +2,14 @@
 
 [HubSpot](https://www.hubspot.com) is an AI-powered customer relationship management (CRM) platform.
 
-The `ballerinax/module-ballerinax-hubspot.crm.obj.contacts` package offers APIs to connect and interact with the [HubSpot Contact API](https://api.hubapi.com/crm/v3/objects/contacts) endpoints, specifically based on the [HubSpot REST API](https://developers.hubspot.com/docs/reference/api/crm/objects/contacts).
+The HubSpot CRM Contacts connector provides APIs to connect and interact with the [HubSpot Contacts API](https://api.hubapi.com/crm/v3/objects/contacts) endpoints, specifically based on the [HubSpot REST API](https://developers.hubspot.com/docs/reference/api/crm/objects/contacts).
 
-Using this API, users can develop applications easily that enables you to manage contacts easily.
+### Key Features
+
+- Create, read, update, and delete contact records in HubSpot CRM
+- List and search contacts with filtering support
+- Manage contact associations and lifecycle stages
+- Batch operations for bulk contact management
 
 ## Setup guide
 

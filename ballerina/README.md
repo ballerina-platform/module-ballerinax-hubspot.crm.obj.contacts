@@ -41,7 +41,7 @@ To add redirect url/s for the app, click the 'Auth' tab on top of the page, and 
 
 ### 2. Setup OAuth 2.0 Flow
 
-Before proceeding with Quick start, ensure you ave obtained the Access Token and refresh Token using the following steps:
+Before proceeding with Quick start, ensure you have obtained the Access Token and refresh Token using the following steps:
 
 1. Add the following scopes for using the Contact API:
 

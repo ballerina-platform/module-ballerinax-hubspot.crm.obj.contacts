@@ -1,8 +1,8 @@
 # Ballerina HubSpot CRM Contacts connector
 
-[![Build](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts/actions/workflows/ci.yml)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts.svg)](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts/commits/master)
-[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/hubspot.crm.object.contacts.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%2Fhubspot.crm.object.contacts)
+[![Build](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/actions/workflows/ci.yml)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts.svg)](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/commits/master)
+[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/hubspot.crm.obj.contacts.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%2Fhubspot.crm.obj.contacts)
 
 ## Overview
 
@@ -166,10 +166,10 @@ bal run
 
 ## Examples
 
-The `Ballerina HubSpot CRM Contacts Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.object.contacts/tree/main/examples/), covering the following use cases:
+The `Ballerina HubSpot CRM Contacts Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/tree/main/examples/), covering the following use cases:
 
-1. [Email-Advertising](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts/tree/main/examples/Email-Advertising) - Unsubscribe and remove customers based on email addresses of CSV-imported data.
-2. [Event-Registration](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts/tree/main/examples/Event-Registration) - Event registration and follow-up using CSV-imported data.
+1. [Email-Advertising](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/tree/main/examples/Email-Advertising) - Unsubscribe and remove customers based on email addresses of CSV-imported data.
+2. [Event-Registration](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/tree/main/examples/Event-Registration) - Event registration and follow-up using CSV-imported data.
 
 ## Build from the source
 
@@ -259,7 +259,7 @@ All the contributors are encouraged to read the [Ballerina Code of Conduct](http
 
 ## Useful links
 
-* For more information go to the [`hubspot.crm.object.contacts` package](https://central.ballerina.io/ballerinax/hubspot.crm.obj.contacts/latest).
+* For more information go to the [`hubspot.crm.obj.contacts` package](https://central.ballerina.io/ballerinax/hubspot.crm.obj.contacts/latest).
 * For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/learn/by-example/).
 * Chat live with us via our [Discord server](https://discord.gg/ballerinalang).
 * Post all technical questions on Stack Overflow with the [#ballerina](https://stackoverflow.com/questions/tagged/ballerina) tag.

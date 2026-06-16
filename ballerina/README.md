@@ -41,7 +41,7 @@ To add redirect url/s for the app, click the 'Auth' tab on top of the page, and 
 
 ### 2. Setup OAuth 2.0 Flow
 
-Before proceeding with Quick start, ensure you ave obtained the Access Token and refresh Token using the following steps:
+Before proceeding with Quick start, ensure you have obtained the Access Token and refresh Token using the following steps:
 
 1. Add the following scopes for using the Contact API:
 
@@ -165,7 +165,7 @@ bal run
 
 ## Examples
 
-The `Ballerina HubSpot CRM Contacts Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.object.contacts/tree/main/examples/), covering the following use cases:
+The `Ballerina HubSpot CRM Contacts Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/tree/main/examples/), covering the following use cases:
 
-1. [Email-Advertising](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts/tree/main/examples/Email-Advertising) - Unsubscribe and remove customers based on email addresses of CSV-imported data.
-2. [Event-Registration](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.contacts/tree/main/examples/Event-Registration) - Event registration and follow-up using CSV-imported data.
+1. [Email-Advertising](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/tree/main/examples/Email-Advertising) - Unsubscribe and remove customers based on email addresses of CSV-imported data.
+2. [Event-Registration](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.obj.contacts/tree/main/examples/Event-Registration) - Event registration and follow-up using CSV-imported data.

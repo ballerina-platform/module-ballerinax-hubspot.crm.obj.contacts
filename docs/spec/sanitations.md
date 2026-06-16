@@ -1,6 +1,6 @@
 _Author_:  @ShavinAnjithaAlpha
 _Created_: 2025/01/06
-_Updated_: 2025/01/06
+_Updated_: 2026/06/16 \\
 _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification
@@ -22,7 +22,6 @@ These changes are done in order to improve the overall usability, and as workaro
         - **Original**: /crm/v3/objects/contacts/batch/create
         - **Updated**: /batch/create 
     - **Reason**: This modification simplifies the API paths, making them shorter and more readable. It also centralizes the versioning to the base URL, which is a common best practice.
-
 
 ## OpenAPI cli command
 

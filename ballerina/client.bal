@@ -36,7 +36,7 @@ public isolated client class Client {
         self.clientEp = check new (serviceUrl, httpClientConfig);
     }
 
-    # Read a batch of contacts by internal ID, or unique property values
+    # Read contacts by ID or property
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -55,7 +55,7 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
-    # Read
+    # Retrieve a contact by ID
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -72,7 +72,7 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
-    # Archive
+    # Archive a contact by ID
     #
     # + headers - Headers to be sent with the request 
     # + return - No content 
@@ -86,7 +86,7 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
-    # Update
+    # Partially update a contact
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
@@ -154,7 +154,7 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
-    # Update a batch of contacts by internal ID, or unique property values
+    # Update contacts by ID or property
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
@@ -188,7 +188,7 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
-    # List
+    # Retrieve a page of contacts
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -205,7 +205,7 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
-    # Create
+    # Create a new contact
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
@@ -222,7 +222,7 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
-    # Create or update a batch of contacts by unique property values
+    # Upsert contacts by property
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
@@ -239,6 +239,8 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # Search for contacts
+    #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     resource isolated function post search(PublicObjectSearchRequest payload, map<string|string[]> headers = {}) returns CollectionResponseWithTotalSimplePublicObjectForwardPaging|error {

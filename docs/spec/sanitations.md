@@ -1,6 +1,6 @@
 _Author_:  @ShavinAnjithaAlpha
 _Created_: 2025/01/06
-_Updated_: 2026/06/16 \\
+_Updated_: 2026/06/16
 _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification

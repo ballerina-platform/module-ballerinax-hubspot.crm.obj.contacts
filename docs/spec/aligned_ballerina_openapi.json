@@ -1,0 +1,2185 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Contacts",
+        "description": "",
+        "version": "v3",
+        "x-hubspot-product-tier-requirements": {
+            "marketing": "FREE",
+            "sales": "FREE",
+            "service": "FREE",
+            "cms": "FREE"
+        },
+        "x-hubspot-documentation-banner": "NONE",
+        "x-hubspot-api-use-case": "Retrieve a contact by ID to bring that contact data into your external system.",
+        "x-hubspot-related-documentation": [
+            {
+                "name": "Contacts Guide",
+                "url": "https://developers.hubspot.com/beta-docs/guides/api/crm/objects/contacts"
+            }
+        ],
+        "x-hubspot-introduction": "Use the contacts API to create and manage contacts."
+    },
+    "servers": [
+        {
+            "url": "https://api.hubapi.com/crm/v3/objects/contacts"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Batch"
+        },
+        {
+            "name": "Basic"
+        },
+        {
+            "name": "Merge"
+        },
+        {
+            "name": "GDPR"
+        },
+        {
+            "name": "Search"
+        }
+    ],
+    "paths": {
+        "/batch/read": {
+            "post": {
+                "tags": [
+                    "Batch"
+                ],
+                "summary": "Read contacts by ID or property",
+                "operationId": "post-/crm/v3/objects/contacts/batch/read_read",
+                "parameters": [
+                    {
+                        "name": "archived",
+                        "in": "query",
+                        "description": "Whether to return only results that have been archived",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BatchReadInputSimplePublicObjectId"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicObject"
+                                }
+                            }
+                        }
+                    },
+                    "207": {
+                        "description": "multiple statuses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicObjectWithErrors"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.read"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.read"
+                        ]
+                    }
+                ],
+                "description": "Returns a batch of contact records retrieved by internal ID or unique property values, with partial success indicated by a 207 response."
+            }
+        },
+        "/{contactId}": {
+            "get": {
+                "tags": [
+                    "Basic"
+                ],
+                "summary": "Retrieve a contact by ID",
+                "description": "Read an Object identified by `{contactId}`. `{contactId}` refers to the internal object ID.  Control what is returned via the `properties` query param.",
+                "operationId": "get-/crm/v3/objects/contacts/{contactId}_getById",
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "properties",
+                        "in": "query",
+                        "description": "A comma separated list of the properties to be returned in the response. If any of the specified properties are not present on the requested object(s), they will be ignored",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "propertiesWithHistory",
+                        "in": "query",
+                        "description": "A comma separated list of the properties to be returned along with their history of previous values. If any of the specified properties are not present on the requested object(s), they will be ignored",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "associations",
+                        "in": "query",
+                        "description": "A comma separated list of object types to retrieve associated IDs for. If any of the specified associations do not exist, they will be ignored",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "archived",
+                        "in": "query",
+                        "description": "Whether to return only results that have been archived",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimplePublicObjectWithAssociations"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.read"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.read"
+                        ]
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Basic"
+                ],
+                "summary": "Archive a contact by ID",
+                "description": "Move an Object identified by `{contactId}` to the recycling bin.",
+                "operationId": "delete-/crm/v3/objects/contacts/{contactId}_archive",
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content",
+                        "content": {}
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Basic"
+                ],
+                "summary": "Partially update a contact",
+                "description": "Perform a partial update of an Object identified by `{contactId}`. `{contactId}` refers to the internal object ID. Provided property values will be overwritten. Read-only and non-existent properties result in an error. Properties values can be cleared by passing an empty string.",
+                "operationId": "patch-/crm/v3/objects/contacts/{contactId}_update",
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "required": true,
+                        "style": "simple",
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SimplePublicObjectInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimplePublicObject"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/merge": {
+            "post": {
+                "tags": [
+                    "Merge"
+                ],
+                "summary": "Merge two contacts with same type",
+                "operationId": "post-/crm/v3/objects/contacts/merge_merge",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PublicMergeInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimplePublicObject"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ],
+                "description": "Returns the resulting merged contact object after combining two contacts of the same type into a single record."
+            }
+        },
+        "/batch/archive": {
+            "post": {
+                "tags": [
+                    "Batch"
+                ],
+                "summary": "Archive a batch of contacts by ID",
+                "operationId": "post-/crm/v3/objects/contacts/batch/archive_archive",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BatchInputSimplePublicObjectId"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No content",
+                        "content": {}
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ],
+                "description": "Archives the specified batch of contacts by ID, moving them to the recycling bin. Returns no content on success."
+            }
+        },
+        "/batch/create": {
+            "post": {
+                "tags": [
+                    "Batch"
+                ],
+                "summary": "Create a batch of contacts",
+                "operationId": "post-/crm/v3/objects/contacts/batch/create_create",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BatchInputSimplePublicObjectInputForCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicObject"
+                                }
+                            }
+                        }
+                    },
+                    "207": {
+                        "description": "multiple statuses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicObjectWithErrors"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ],
+                "description": "Returns the newly created batch of contact records, with partial success indicated by a 207 response."
+            }
+        },
+        "/batch/update": {
+            "post": {
+                "tags": [
+                    "Batch"
+                ],
+                "summary": "Update contacts by ID or property",
+                "operationId": "post-/crm/v3/objects/contacts/batch/update_update",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BatchInputSimplePublicObjectBatchInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicObject"
+                                }
+                            }
+                        }
+                    },
+                    "207": {
+                        "description": "multiple statuses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicObjectWithErrors"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ],
+                "description": "Returns the updated batch of contact records identified by internal ID or unique property values, with partial success indicated by a 207 response."
+            }
+        },
+        "/gdpr-delete": {
+            "post": {
+                "tags": [
+                    "GDPR"
+                ],
+                "summary": "GDPR DELETE",
+                "description": "Permanently delete a contact and all associated content to follow GDPR. Use optional property 'idProperty' set to 'email' to identify contact by email address. If email address is not found, the email address will be added to a blocklist and prevent it from being used in the future.",
+                "operationId": "post-/crm/v3/objects/contacts/gdpr-delete_purge",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PublicGdprDeleteInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No content",
+                        "content": {}
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/": {
+            "get": {
+                "tags": [
+                    "Basic"
+                ],
+                "summary": "Retrieve a page of contacts",
+                "description": "Read a page of contacts. Control what is returned via the `properties` query param.",
+                "operationId": "get-/crm/v3/objects/contacts_getPage",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to display per page",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "after",
+                        "in": "query",
+                        "description": "The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "properties",
+                        "in": "query",
+                        "description": "A comma separated list of the properties to be returned in the response. If any of the specified properties are not present on the requested object(s), they will be ignored",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "propertiesWithHistory",
+                        "in": "query",
+                        "description": "A comma separated list of the properties to be returned along with their history of previous values. If any of the specified properties are not present on the requested object(s), they will be ignored. Usage of this parameter will reduce the maximum number of objects that can be read by a single request",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "associations",
+                        "in": "query",
+                        "description": "A comma separated list of object types to retrieve associated IDs for. If any of the specified associations do not exist, they will be ignored",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "archived",
+                        "in": "query",
+                        "description": "Whether to return only results that have been archived",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CollectionResponseSimplePublicObjectWithAssociationsForwardPaging"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.read"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.read"
+                        ]
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Basic"
+                ],
+                "summary": "Create a new contact",
+                "description": "Create a contact with the given properties and return a copy of the object, including the ID. Documentation and examples for creating standard contacts is provided.",
+                "operationId": "post-/crm/v3/objects/contacts_create",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SimplePublicObjectInputForCreate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimplePublicObject"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/batch/upsert": {
+            "post": {
+                "tags": [
+                    "Batch"
+                ],
+                "summary": "Upsert contacts by property",
+                "description": "Create or update records identified by a unique property value as specified by the `idProperty` query param. `idProperty` query param refers to a property whose values are unique for the object.",
+                "operationId": "post-/crm/v3/objects/contacts/batch/upsert_upsert",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BatchInputSimplePublicObjectBatchInputUpsert"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicUpsertObject"
+                                }
+                            }
+                        }
+                    },
+                    "207": {
+                        "description": "multiple statuses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BatchResponseSimplePublicUpsertObjectWithErrors"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.write"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.write"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/search": {
+            "post": {
+                "tags": [
+                    "Search"
+                ],
+                "operationId": "post-/crm/v3/objects/contacts/search_doSearch",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PublicObjectSearchRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CollectionResponseWithTotalSimplePublicObjectForwardPaging"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": [
+                            "crm.objects.contacts.read"
+                        ]
+                    },
+                    {
+                        "private_apps": [
+                            "crm.objects.contacts.read"
+                        ]
+                    }
+                ],
+                "x-hubspot-rate-limit-exemptions": [
+                    "ten-secondly"
+                ],
+                "description": "Returns a collection of contact records matching the specified search criteria and filters.",
+                "summary": "Search for contacts"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StandardError": {
+                "required": [
+                    "category",
+                    "context",
+                    "errors",
+                    "links",
+                    "message",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "subCategory": {
+                        "type": "object",
+                        "properties": {},
+                        "description": "Optional sub-category providing further error classification detail."
+                    },
+                    "context": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "Key-value map of contextual metadata related to the error."
+                    },
+                    "links": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of relevant links associated with the error response."
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier for this specific error instance."
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "High-level category classifying the type of error."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Human-readable description of the error."
+                    },
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetail"
+                        },
+                        "description": "List of detailed error entries associated with this error."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "HTTP status code or status label for the error response."
+                    }
+                },
+                "description": "Standard error response object returned when an API request fails."
+            },
+            "CollectionResponseAssociatedId": {
+                "required": [
+                    "results"
+                ],
+                "type": "object",
+                "properties": {
+                    "paging": {
+                        "$ref": "#/components/schemas/Paging",
+                        "description": "Paging metadata for navigating through the results collection."
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AssociatedId"
+                        },
+                        "description": "Array of associated IDs returned in the current page."
+                    }
+                },
+                "description": "Paginated collection response containing a list of associated object IDs."
+            },
+            "PublicAssociationsForObject": {
+                "type": "object",
+                "properties": {
+                    "types": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AssociationSpec"
+                        },
+                        "description": "List of association type specifications defining the relationship."
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/PublicObjectId",
+                        "description": "The target object to associate with the source contact."
+                    }
+                },
+                "description": "Defines the association target object and relationship types for a contact."
+            },
+            "BatchResponseSimplePublicObject": {
+                "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "completedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation completed."
+                    },
+                    "requestedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation was requested."
+                    },
+                    "startedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation began processing."
+                    },
+                    "links": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of supplementary links related to the batch response."
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObject"
+                        },
+                        "description": "Array of contact objects returned by the batch operation."
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "PROCESSING",
+                            "CANCELED",
+                            "COMPLETE"
+                        ],
+                        "description": "Current processing status of the batch operation."
+                    }
+                },
+                "description": "Batch operation response containing results and processing status for multiple contacts."
+            },
+            "FilterGroup": {
+                "required": [
+                    "filters"
+                ],
+                "type": "object",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Filter"
+                        },
+                        "description": "Array of filter conditions applied within this group."
+                    }
+                },
+                "description": "A logical grouping of filters applied together when searching contacts."
+            },
+            "ErrorDetail": {
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "subCategory": {
+                        "type": "string",
+                        "description": "A specific category that contains more specific detail about the error"
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "The status code associated with the error detail"
+                    },
+                    "in": {
+                        "type": "string",
+                        "description": "The name of the field or parameter in which the error was found"
+                    },
+                    "context": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "Context about the error condition",
+                        "example": {
+                            "missingScopes": [
+                                "scope1",
+                                "scope2"
+                            ]
+                        }
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "A human readable message describing the error along with remediation steps where appropriate"
+                    }
+                },
+                "description": "Detailed information about a specific error encountered during a request."
+            },
+            "ForwardPaging": {
+                "type": "object",
+                "properties": {
+                    "next": {
+                        "$ref": "#/components/schemas/NextPage",
+                        "description": "Cursor and link to retrieve the next page of results."
+                    }
+                },
+                "description": "Pagination object providing a cursor for forward navigation through results."
+            },
+            "SimplePublicObjectId": {
+                "required": [
+                    "id"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the contact record."
+                    }
+                },
+                "description": "An object representing a unique identifier for a public contact record."
+            },
+            "BatchResponseSimplePublicUpsertObjectWithErrors": {
+                "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "completedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation completed."
+                    },
+                    "numErrors": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Total number of errors encountered during the batch operation."
+                    },
+                    "requestedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation was requested."
+                    },
+                    "startedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation began processing."
+                    },
+                    "links": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of relevant hyperlinks associated with the batch response."
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicUpsertObject"
+                        },
+                        "description": "Array of upserted contact objects returned by the batch operation."
+                    },
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StandardError"
+                        },
+                        "description": "Array of errors encountered for individual records in the batch."
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "PROCESSING",
+                            "CANCELED",
+                            "COMPLETE"
+                        ],
+                        "description": "Current processing status of the batch upsert operation."
+                    }
+                },
+                "description": "Batch upsert response containing results, errors, and processing metadata for contact records."
+            },
+            "BatchReadInputSimplePublicObjectId": {
+                "required": [
+                    "inputs",
+                    "properties",
+                    "propertiesWithHistory"
+                ],
+                "type": "object",
+                "properties": {
+                    "propertiesWithHistory": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of properties for which historical values should be included."
+                    },
+                    "idProperty": {
+                        "type": "string",
+                        "description": "The property name used as the unique identifier for batch lookup."
+                    },
+                    "inputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObjectId"
+                        },
+                        "description": "List of contact object IDs to retrieve in the batch request."
+                    },
+                    "properties": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of property names to include in the response for each contact."
+                    }
+                },
+                "description": "Input schema for reading a batch of contacts by their unique IDs with specified properties."
+            },
+            "BatchResponseSimplePublicUpsertObject": {
+                "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "completedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation completed."
+                    },
+                    "requestedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation was requested."
+                    },
+                    "startedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation began processing."
+                    },
+                    "links": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of related resource links associated with the batch response."
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicUpsertObject"
+                        },
+                        "description": "List of upserted contact objects returned from the batch operation."
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "PROCESSING",
+                            "CANCELED",
+                            "COMPLETE"
+                        ],
+                        "description": "Current processing status of the batch operation: PENDING, PROCESSING, CANCELED, or COMPLETE."
+                    }
+                },
+                "description": "Response object representing the outcome of a batch upsert operation, including status, timing, and resulting contact records."
+            },
+            "BatchInputSimplePublicObjectId": {
+                "required": [
+                    "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                    "inputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObjectId"
+                        },
+                        "description": "List of contact object IDs to include in the batch operation."
+                    }
+                },
+                "description": "Input schema for a batch operation specifying a list of contact object IDs to process."
+            },
+            "ValueWithTimestamp": {
+                "required": [
+                    "sourceType",
+                    "timestamp",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "sourceId": {
+                        "type": "string",
+                        "description": "Identifier of the source that set or updated the property value."
+                    },
+                    "sourceType": {
+                        "type": "string",
+                        "description": "Type of source that originated the property value change."
+                    },
+                    "sourceLabel": {
+                        "type": "string",
+                        "description": "Human-readable label describing the source of the property value."
+                    },
+                    "updatedByUserId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "ID of the user who last updated the property value."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "The property value associated with the given timestamp and source."
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the property value was last updated."
+                    }
+                },
+                "description": "Represents a property value paired with its source metadata and the timestamp of the last update."
+            },
+            "BatchInputSimplePublicObjectBatchInputUpsert": {
+                "required": [
+                    "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                    "inputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObjectBatchInputUpsert"
+                        },
+                        "description": "Array of contact upsert input objects to process in batch."
+                    }
+                },
+                "description": "Input schema for a batch upsert operation containing a list of contacts to create or update."
+            },
+            "CollectionResponseWithTotalSimplePublicObjectForwardPaging": {
+                "required": [
+                    "results",
+                    "total"
+                ],
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Total number of contacts matching the request."
+                    },
+                    "paging": {
+                        "$ref": "#/components/schemas/ForwardPaging",
+                        "description": "Forward paging cursor for retrieving the next page of results."
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObject"
+                        },
+                        "description": "Array of contact objects returned in the current page."
+                    }
+                },
+                "description": "A paginated collection of contacts with a total count and forward paging cursor."
+            },
+            "SimplePublicObject": {
+                "required": [
+                    "createdAt",
+                    "id",
+                    "properties",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "properties": {
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the contact record was created."
+                    },
+                    "archived": {
+                        "type": "boolean",
+                        "example": false,
+                        "description": "Indicates whether the contact has been archived."
+                    },
+                    "archivedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the contact record was archived."
+                    },
+                    "propertiesWithHistory": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/ValueWithTimestamp"
+                            }
+                        },
+                        "description": "Map of property names to their historical values with timestamps."
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "512",
+                        "description": "Unique identifier for the contact record."
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "example": {
+                            "property_date": "1572480000000",
+                            "property_radio": "option_1",
+                            "property_number": "17",
+                            "property_string": "value",
+                            "property_checkbox": "false",
+                            "property_dropdown": "choice_b",
+                            "property_multiple_checkboxes": "chocolate;strawberry"
+                        },
+                        "description": "Map of contact property names to their current values."
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp when the contact record was last updated."
+                    }
+                },
+                "example": {
+                    "id": "512",
+                    "properties": {
+                        "company": "Biglytics",
+                        "createdate": "2019-10-30T03:30:17.883Z",
+                        "email": "bcooper@biglytics.net",
+                        "firstname": "Bryan",
+                        "lastmodifieddate": "2019-12-07T16:50:06.678Z",
+                        "lastname": "Cooper",
+                        "phone": "(877) 929-0687",
+                        "website": "biglytics.net"
+                    },
+                    "createdAt": "2019-10-30T03:30:17.883Z",
+                    "updatedAt": "2019-12-07T16:50:06.678Z",
+                    "archived": false
+                },
+                "description": "Represents a contact record with its properties, timestamps, and archival status."
+            },
+            "PublicObjectId": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier of the referenced object."
+                    }
+                },
+                "description": "Represents a reference to a public object by its unique identifier."
+            },
+            "Paging": {
+                "type": "object",
+                "properties": {
+                    "next": {
+                        "$ref": "#/components/schemas/NextPage",
+                        "description": "Cursor and link for retrieving the next page of results."
+                    },
+                    "prev": {
+                        "$ref": "#/components/schemas/PreviousPage",
+                        "description": "Cursor and link for retrieving the previous page of results."
+                    }
+                },
+                "description": "Pagination cursors for navigating forward and backward through result sets."
+            },
+            "PublicObjectSearchRequest": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Full-text search query string to match against contact records."
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Maximum number of results to return per page."
+                    },
+                    "after": {
+                        "type": "string",
+                        "description": "Cursor token for retrieving the next page of results."
+                    },
+                    "sorts": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of property names to sort results by."
+                    },
+                    "properties": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of contact properties to include in the response."
+                    },
+                    "filterGroups": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterGroup"
+                        },
+                        "description": "Groups of filters used to narrow search results."
+                    }
+                },
+                "description": "Request payload for searching contacts with filters, sorting, and pagination."
+            },
+            "Error": {
+                "required": [
+                    "category",
+                    "correlationId",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "subCategory": {
+                        "type": "string",
+                        "description": "A specific category that contains more specific detail about the error"
+                    },
+                    "context": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "Context about the error condition",
+                        "example": {
+                            "missingScopes": [
+                                "scope1",
+                                "scope2"
+                            ],
+                            "invalidPropertyName": [
+                                "propertyValue"
+                            ]
+                        }
+                    },
+                    "correlationId": {
+                        "type": "string",
+                        "description": "A unique identifier for the request. Include this value with any error reports or support tickets",
+                        "format": "uuid",
+                        "example": "aeb5f871-7f07-4993-9211-075dc63e7cbf"
+                    },
+                    "links": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "A map of link names to associated URIs containing documentation about the error or recommended remediation steps",
+                        "example": {
+                            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                        }
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "A human readable message describing the error along with remediation steps where appropriate",
+                        "example": "Invalid input (details will vary based on the error)"
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "The error category",
+                        "example": "VALIDATION_ERROR"
+                    },
+                    "errors": {
+                        "type": "array",
+                        "description": "further information about the error",
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetail"
+                        }
+                    }
+                },
+                "example": {
+                    "message": "Invalid input (details will vary based on the error)",
+                    "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+                    "category": "VALIDATION_ERROR",
+                    "links": {
+                        "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+                    }
+                },
+                "description": "Describes an API error response, including category, message, correlation ID, and optional context details."
+            },
+            "SimplePublicObjectBatchInputUpsert": {
+                "required": [
+                    "id",
+                    "properties"
+                ],
+                "type": "object",
+                "properties": {
+                    "idProperty": {
+                        "type": "string",
+                        "description": "The property name used as the unique identifier for the upsert."
+                    },
+                    "objectWriteTraceId": {
+                        "type": "string",
+                        "description": "Trace ID for tracking the write operation."
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the contact to upsert."
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Key-value map of contact property names and their values."
+                    }
+                },
+                "description": "Input payload for upserting a single contact in a batch operation, including its ID and properties."
+            },
+            "BatchResponseSimplePublicObjectWithErrors": {
+                "required": [
+                    "completedAt",
+                    "results",
+                    "startedAt",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "completedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation completed."
+                    },
+                    "numErrors": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Total number of errors encountered during the batch operation."
+                    },
+                    "requestedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation was requested."
+                    },
+                    "startedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the batch operation began processing."
+                    },
+                    "links": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of relevant link names to associated URLs."
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObject"
+                        },
+                        "description": "List of successfully processed contact objects from the batch."
+                    },
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StandardError"
+                        },
+                        "description": "List of errors encountered for individual records in the batch."
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "PROCESSING",
+                            "CANCELED",
+                            "COMPLETE"
+                        ],
+                        "description": "Current processing status of the batch operation."
+                    }
+                },
+                "description": "Batch operation response containing contact results, processing status, timestamps, and any errors encountered."
+            },
+            "PublicGdprDeleteInput": {
+                "required": [
+                    "objectId"
+                ],
+                "type": "object",
+                "properties": {
+                    "idProperty": {
+                        "type": "string",
+                        "description": "The property name used to identify the contact for deletion."
+                    },
+                    "objectId": {
+                        "type": "string",
+                        "description": "The unique identifier of the contact to permanently delete."
+                    }
+                },
+                "description": "Input schema for GDPR-compliant permanent deletion of a contact record."
+            },
+            "SimplePublicObjectInput": {
+                "required": [
+                    "properties"
+                ],
+                "type": "object",
+                "properties": {
+                    "objectWriteTraceId": {
+                        "type": "string",
+                        "description": "Trace identifier for tracking and auditing the write operation."
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "example": {
+                            "property_date": "1572480000000",
+                            "property_radio": "option_1",
+                            "property_number": "17",
+                            "property_string": "value",
+                            "property_checkbox": "false",
+                            "property_dropdown": "choice_b",
+                            "property_multiple_checkboxes": "chocolate;strawberry"
+                        },
+                        "description": "Map of contact property names to their string values to be written."
+                    }
+                },
+                "example": {
+                    "properties": {
+                        "email": "bcooper@biglytics.net",
+                        "phone": "(877) 929-0687",
+                        "company": "Biglytics",
+                        "website": "biglytics.net",
+                        "lastname": "Cooper",
+                        "firstname": "Bryan"
+                    },
+                    "associations": []
+                },
+                "description": "Input schema for creating or updating a contact with key-value property pairs."
+            },
+            "CollectionResponseSimplePublicObjectWithAssociationsForwardPaging": {
+                "required": [
+                    "results"
+                ],
+                "type": "object",
+                "properties": {
+                    "paging": {
+                        "$ref": "#/components/schemas/ForwardPaging",
+                        "description": "Forward paging cursor information for retrieving the next result page."
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObjectWithAssociations"
+                        },
+                        "description": "Array of contact objects returned in the current page of results."
+                    }
+                },
+                "description": "Paginated collection of contact objects including their associated records."
+            },
+            "AssociationSpec": {
+                "type": "object",
+                "properties": {
+                    "associationCategory": {
+                        "type": "string",
+                        "enum": [
+                            "HUBSPOT_DEFINED",
+                            "USER_DEFINED",
+                            "INTEGRATOR_DEFINED"
+                        ],
+                        "description": "The category defining who created the association type."
+                    },
+                    "associationTypeId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Numeric identifier for the specific association type."
+                    }
+                },
+                "description": "Defines the category and type of an association between CRM objects."
+            },
+            "PublicMergeInput": {
+                "required": [
+                    "objectIdToMerge",
+                    "primaryObjectId"
+                ],
+                "type": "object",
+                "properties": {
+                    "objectIdToMerge": {
+                        "type": "string",
+                        "description": "The ID of the secondary contact to be merged into the primary record."
+                    },
+                    "primaryObjectId": {
+                        "type": "string",
+                        "description": "The ID of the primary contact that will be retained after the merge."
+                    }
+                },
+                "description": "Input schema specifying the two contact records to merge into one."
+            },
+            "SimplePublicObjectWithAssociations": {
+                "required": [
+                    "createdAt",
+                    "id",
+                    "properties",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "properties": {
+                    "associations": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/CollectionResponseAssociatedId"
+                        },
+                        "description": "Map of associated CRM object collections keyed by association type."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the contact record was created."
+                    },
+                    "archived": {
+                        "type": "boolean",
+                        "description": "Indicates whether the contact record has been archived."
+                    },
+                    "archivedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the contact record was archived."
+                    },
+                    "propertiesWithHistory": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/ValueWithTimestamp"
+                            }
+                        },
+                        "description": "Map of property names to their historical values with timestamps"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier of the contact object"
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "description": "Map of contact property names to their current values"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp of the most recent update to the contact"
+                    }
+                },
+                "example": {
+                    "properties": {
+                        "company": "Biglytics",
+                        "createdate": "2019-10-30T03:30:17.883Z",
+                        "email": "bcooper@biglytics.net",
+                        "firstname": "Bryan",
+                        "lastmodifieddate": "2019-12-07T16:50:06.678Z",
+                        "lastname": "Cooper",
+                        "phone": "(877) 929-0687",
+                        "website": "biglytics.net"
+                    }
+                },
+                "description": "A contact record including its properties, metadata, and associated CRM objects."
+            },
+            "Filter": {
+                "required": [
+                    "operator",
+                    "propertyName"
+                ],
+                "type": "object",
+                "properties": {
+                    "highValue": {
+                        "type": "string",
+                        "description": "Upper bound value for range-based filter operators such as BETWEEN"
+                    },
+                    "propertyName": {
+                        "type": "string",
+                        "description": "The contact property name to evaluate in the filter condition"
+                    },
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of values used with multi-value operators such as IN or NOT_IN"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Single value to compare against the specified contact property"
+                    },
+                    "operator": {
+                        "type": "string",
+                        "description": "null",
+                        "enum": [
+                            "EQ",
+                            "NEQ",
+                            "LT",
+                            "LTE",
+                            "GT",
+                            "GTE",
+                            "BETWEEN",
+                            "IN",
+                            "NOT_IN",
+                            "HAS_PROPERTY",
+                            "NOT_HAS_PROPERTY",
+                            "CONTAINS_TOKEN",
+                            "NOT_CONTAINS_TOKEN"
+                        ]
+                    }
+                },
+                "description": "Defines a filter condition used to query contacts by property value using a specified comparison operator"
+            },
+            "BatchInputSimplePublicObjectBatchInput": {
+                "required": [
+                    "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                    "inputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObjectBatchInput"
+                        },
+                        "description": "Array of contact update input objects to process in the batch operation"
+                    }
+                },
+                "description": "Wrapper object containing a list of contact update inputs for batch processing"
+            },
+            "BatchInputSimplePublicObjectInputForCreate": {
+                "required": [
+                    "inputs"
+                ],
+                "type": "object",
+                "properties": {
+                    "inputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SimplePublicObjectInputForCreate"
+                        },
+                        "description": "Array of contact creation input objects to process in the batch operation"
+                    }
+                },
+                "description": "Wrapper object containing a list of contact creation inputs for batch processing"
+            },
+            "PreviousPage": {
+                "required": [
+                    "before"
+                ],
+                "type": "object",
+                "properties": {
+                    "before": {
+                        "type": "string",
+                        "description": "Cursor token representing the start of the previous page"
+                    },
+                    "link": {
+                        "type": "string",
+                        "description": "URL link to retrieve the previous page of results"
+                    }
+                },
+                "description": "Pagination cursor object referencing the previous page of results"
+            },
+            "SimplePublicUpsertObject": {
+                "required": [
+                    "createdAt",
+                    "id",
+                    "new",
+                    "properties",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "properties": {
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the contact record was originally created"
+                    },
+                    "archived": {
+                        "type": "boolean",
+                        "description": "Indicates whether the contact record is currently archived"
+                    },
+                    "archivedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the contact record was archived"
+                    },
+                    "new": {
+                        "type": "boolean",
+                        "description": "Indicates whether the contact record was newly created by the upsert operation."
+                    },
+                    "propertiesWithHistory": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/ValueWithTimestamp"
+                            }
+                        },
+                        "description": "Map of property names to their historical values with timestamps."
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the upserted contact record."
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of property names to their current values for the contact."
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Timestamp indicating when the contact record was last updated."
+                    }
+                },
+                "description": "Represents a contact record returned from an upsert operation, indicating whether the record was newly created"
+            },
+            "SimplePublicObjectBatchInput": {
+                "required": [
+                    "id",
+                    "properties"
+                ],
+                "type": "object",
+                "properties": {
+                    "idProperty": {
+                        "type": "string",
+                        "example": "my_unique_property_name",
+                        "description": "The name of a unique property used to identify the contact instead of the default ID."
+                    },
+                    "objectWriteTraceId": {
+                        "type": "string",
+                        "description": "Trace identifier for tracking and debugging the write operation."
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the contact record to update."
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of property names to their updated values for the contact."
+                    }
+                },
+                "example": {
+                    "id": "1",
+                    "properties": {
+                        "email": "bcooper@biglytics.net",
+                        "phone": "(877) 929-0687",
+                        "company": "Biglytics",
+                        "website": "biglytics.net",
+                        "lastname": "Cooper",
+                        "firstname": "Bryan"
+                    }
+                },
+                "description": "Input payload for updating an existing contact in a batch operation, identified by a unique ID and containing key-value property data."
+            },
+            "AssociatedId": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the associated object."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of association between the contact and the related object."
+                    }
+                },
+                "description": "Represents a reference to an associated object, defined by its unique ID and association type."
+            },
+            "NextPage": {
+                "required": [
+                    "after"
+                ],
+                "type": "object",
+                "properties": {
+                    "link": {
+                        "type": "string",
+                        "example": "?after=NTI1Cg%3D%3D",
+                        "description": "A ready-to-use relative URL for fetching the next page of results."
+                    },
+                    "after": {
+                        "type": "string",
+                        "example": "NTI1Cg%3D%3D",
+                        "description": "Cursor token used as the 'after' parameter to retrieve the next page of results."
+                    }
+                },
+                "example": {
+                    "after": "NTI1Cg%3D%3D",
+                    "link": "?after=NTI1Cg%3D%3D"
+                },
+                "description": "Pagination cursor object providing a token and optional link to retrieve the next page of results."
+            },
+            "SimplePublicObjectInputForCreate": {
+                "required": [
+                    "properties"
+                ],
+                "type": "object",
+                "properties": {
+                    "associations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PublicAssociationsForObject"
+                        },
+                        "description": "List of associations linking the new contact to other CRM objects."
+                    },
+                    "objectWriteTraceId": {
+                        "type": "string",
+                        "description": "Trace identifier for tracking and debugging the write operation."
+                    },
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Map of property names to their values for the new contact record."
+                    }
+                },
+                "example": {
+                    "properties": {
+                        "email": "bcooper@biglytics.net",
+                        "phone": "(877) 929-0687",
+                        "company": "Biglytics",
+                        "website": "biglytics.net",
+                        "lastname": "Cooper",
+                        "firstname": "Bryan"
+                    },
+                    "associations": []
+                },
+                "description": "Input payload for creating a new contact, including property values and optional associations to other objects."
+            }
+        },
+        "responses": {
+            "Error": {
+                "description": "An error occurred.",
+                "content": {
+                    "*/*": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "oauth2_legacy": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "authorizationUrl": "https://app.hubspot.com/oauth/authorize",
+                        "tokenUrl": "https://api.hubapi.com/oauth/v1/token",
+                        "scopes": {
+                            "crm.objects.goals.read": "Read goals",
+                            "tickets": "Read and write tickets",
+                            "crm.objects.custom.read": "View custom object records",
+                            "e-commerce": "e-commerce",
+                            "crm.objects.custom.write": "Change custom object records",
+                            "media_bridge.read": "Read media and media events"
+                        }
+                    }
+                }
+            },
+            "oauth2": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "authorizationUrl": "https://app.hubspot.com/oauth/authorize",
+                        "tokenUrl": "https://api.hubapi.com/oauth/v1/token",
+                        "scopes": {
+                            "crm.objects.companies.write": " ",
+                            "crm.objects.contacts.write": " ",
+                            "crm.objects.users.write": "Write User CRM objects",
+                            "crm.objects.commercepayments.read": "Read the COMMERCE_PAYMENT object.",
+                            "crm.objects.leads.write": "Modify lead objects",
+                            "crm.objects.subscriptions.read": "Read Commerce Subscriptions",
+                            "crm.objects.carts.read": "Read carts",
+                            "crm.objects.orders.write": "Write orders",
+                            "crm.objects.quotes.read": "Quotes",
+                            "crm.objects.services.read": "Read services",
+                            "crm.objects.orders.read": "Read Orders",
+                            "crm.objects.contacts.read": " ",
+                            "crm.objects.listings.read": "Read listings",
+                            "crm.objects.carts.write": "Write cart",
+                            "crm.objects.courses.write": "Write courses",
+                            "crm.objects.quotes.write": "Quotes",
+                            "crm.objects.users.read": "Read User CRM objects",
+                            "crm.objects.companies.read": " ",
+                            "crm.objects.appointments.read": "Read appointments",
+                            "crm.objects.partner-clients.write": "Modify Partner Client CRM objects",
+                            "crm.objects.leads.read": "Read lead objects",
+                            "crm.objects.appointments.write": "Write appointments",
+                            "crm.objects.services.write": "Write services",
+                            "crm.objects.line_items.read": "Line Items",
+                            "crm.objects.courses.read": "Read courses",
+                            "crm.objects.deals.read": " ",
+                            "crm.objects.invoices.read": "Read invoices objects",
+                            "crm.objects.partner-clients.read": "View Partner Client CRM objects",
+                            "crm.objects.deals.write": " ",
+                            "crm.objects.line_items.write": "Line Items",
+                            "crm.objects.listings.write": "Write listings"
+                        }
+                    }
+                }
+            },
+            "private_apps_legacy": {
+                "type": "apiKey",
+                "name": "private-app-legacy",
+                "in": "header",
+                "x-ballerina-name": "privateAppLegacy"
+            },
+            "private_apps": {
+                "type": "apiKey",
+                "name": "private-app",
+                "in": "header",
+                "x-ballerina-name": "privateApp"
+            }
+        }
+    },
+    "x-hubspot-available-client-libraries": [
+        "PHP",
+        "Node",
+        "Ruby",
+        "Python"
+    ],
+    "x-hubspot-product-tier-requirements": {
+        "marketing": "FREE",
+        "sales": "FREE",
+        "service": "FREE",
+        "cms": "FREE"
+    },
+    "x-hubspot-documentation-banner": "NONE"
+}
